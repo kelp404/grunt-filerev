@@ -15,6 +15,7 @@ module.exports = function (grunt) {
       length: 8
     });
 
+    var now = new Date();
     eachAsync(this.files, function (el, i, next) {
       var move = true;
 
@@ -44,8 +45,13 @@ module.exports = function (grunt) {
           return;
         }
 
-        var dirname;
-        var hash = crypto.createHash(options.algorithm).update(fs.readFileSync(file)).digest('hex');
+        var dirname, hash;
+        if (el.hashSource === 'date') {
+          hash = crypto.createHash(options.algorithm).update(now.toJSON()).digest('hex');
+        }
+        else {
+          hash = crypto.createHash(options.algorithm).update(fs.readFileSync(file)).digest('hex');
+        }
         var suffix = hash.slice(0, options.length);
         var ext = path.extname(file);
         var newName;

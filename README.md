@@ -30,6 +30,7 @@ grunt.initConfig({
       length: 8
     },
     images: {
+      hashSource: '{date, file}',
       src: 'img/**/*.{jpg,jpeg,gif,png,webp}'
     }
   }
